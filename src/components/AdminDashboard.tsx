@@ -63,6 +63,9 @@ const AdminDashboard = () => {
     password: ''
   });
   const [creatingReference, setCreatingReference] = useState(false);
+  const [showWhatsAppModal, setShowWhatsAppModal] = useState(false);
+  const [selectedReference, setSelectedReference] = useState<Reference | null>(null);
+  const [referencePassword, setReferencePassword] = useState('');
 
   useEffect(() => {
     fetchApplicants();
@@ -298,9 +301,60 @@ const AdminDashboard = () => {
     window.open(`tel:+91${phone}`, '_self');
   };
 
+  const sendReferenceCredentialsViaWhatsApp = (reference: Reference, password: string) => {
+    if (!reference.phone) {
+      toast({
+        title: "Error",
+        description: "Reference has no phone number",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    // Format phone number for India (add 91 prefix if not present)
+    const formattedPhone = reference.phone.startsWith('+') 
+      ? reference.phone.substring(1) 
+      : reference.phone.startsWith('91') 
+        ? reference.phone 
+        : `91${reference.phone}`;
+    
+    // Create a professional message with credentials
+    const message = encodeURIComponent(
+      `Hello ${reference.name},\n\n` +
+      `Welcome to ManaCLG LevelUp! Your reference account has been created. Here are your login details:\n\n` +
+      `Email: ${reference.email}\n` +
+      `Password: ${password}\n\n` +
+      `Please use these credentials to access your dashboard at: https://manaclglevelupcareers.vercel.app/reference\n\n` +
+      `Thank you for your partnership!\n` +
+      `ManaCLG LevelUp Team`
+    );
+    
+    // Open WhatsApp with the message
+    const whatsappUrl = `https://wa.me/${formattedPhone}?text=${message}`;
+    window.open(whatsappUrl, '_blank');
+    
+    // Close modal and reset state
+    setShowWhatsAppModal(false);
+    setSelectedReference(null);
+    setReferencePassword('');
+  };
+
+  const openWhatsAppModal = (reference: Reference) => {
+    setSelectedReference(reference);
+    setShowWhatsAppModal(true);
+  };
+
+  // Modify handleWhatsAppClick to ensure it always has 91 prefix for India
   const handleWhatsAppClick = (phone: string, name: string) => {
+    // Format phone number for India (add 91 prefix if not present)
+    const formattedPhone = phone.startsWith('+') 
+      ? phone.substring(1) 
+      : phone.startsWith('91') 
+        ? phone 
+        : `91${phone}`;
+    
     const message = `Hi ${name}, thank you for applying as SRM at ManaCLG LevelUp. Our team will be in touch shortly.`;
-    const whatsappUrl = `https://wa.me/91${phone}?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/${formattedPhone}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 
@@ -1085,6 +1139,13 @@ const AdminDashboard = () => {
                             <Edit2 className="w-4 h-4" />
                           </button>
                           <button
+                            onClick={() => openWhatsAppModal(reference)}
+                            className="p-2 text-green-600 hover:text-green-800 hover:bg-green-50 rounded-lg transition-all duration-300"
+                            title="Send credentials via WhatsApp"
+                          >
+                            <MessageCircle className="w-4 h-4" />
+                          </button>
+                          <button
                             onClick={() => deleteReference(reference.id)}
                             className="p-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-lg transition-all duration-300"
                           >
@@ -1276,6 +1337,69 @@ const AdminDashboard = () => {
                 className="flex-1 px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors font-medium"
               >
                 Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* WhatsApp Modal for sending reference credentials */}
+      {showWhatsAppModal && selectedReference && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl p-6 max-w-md w-full">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-bold text-gray-900">Send Credentials via WhatsApp</h3>
+              <button
+                onClick={() => {
+                  setShowWhatsAppModal(false);
+                  setSelectedReference(null);
+                  setReferencePassword('');
+                }}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <XCircle className="w-6 h-6" />
+              </button>
+            </div>
+            
+            <div className="space-y-4 mb-6">
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1">Reference Name</label>
+                <p className="text-gray-900 font-medium">{selectedReference.name}</p>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1">Email</label>
+                <p className="text-gray-900">{selectedReference.email}</p>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1">Phone</label>
+                <p className="text-gray-900">{selectedReference.phone || "Not available"}</p>
+              </div>
+              
+              <div>
+                <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-1">Password *</label>
+                <input
+                  type="password"
+                  id="password"
+                  value={referencePassword}
+                  onChange={(e) => setReferencePassword(e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl text-gray-900 focus:border-green-500 focus:ring-2 focus:ring-green-100 outline-none"
+                  placeholder="Enter password to send"
+                  required
+                />
+                <p className="text-xs text-gray-500 mt-1">Enter the password you want to send to this reference.</p>
+              </div>
+            </div>
+            
+            <div className="flex justify-end">
+              <button
+                onClick={() => sendReferenceCredentialsViaWhatsApp(selectedReference, referencePassword)}
+                disabled={!referencePassword || !selectedReference.phone}
+                className="px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 font-medium flex items-center"
+              >
+                <MessageCircle className="w-4 h-4 mr-2" />
+                Send via WhatsApp
               </button>
             </div>
           </div>
