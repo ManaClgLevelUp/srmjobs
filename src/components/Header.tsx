@@ -38,7 +38,7 @@ const Header = () => {
               />
               <div className="hidden sm:block">
                 <h1 className="text-lg lg:text-xl font-bold text-gray-800">ManaCLG LevelUp</h1>
-                <p className="text-xs text-gray-600">Recruitment Platform</p>
+                <p className="text-xs text-gray-600">Careers & Recruitment </p>
               </div>
             </div>
 
