@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 
@@ -34,11 +33,11 @@ const Header = () => {
               <img 
                 src="https://res.cloudinary.com/dvmrhs2ek/image/upload/v1750141579/qkehxe09cunkcvyh8o1i.jpg"
                 alt="ManaCLG LevelUp"
-                className="h-10 lg:h-12 w-auto object-contain"
+                className="h-8 lg:h-10 w-auto object-contain"
               />
-              <div className="hidden sm:block">
-                <h1 className="text-lg lg:text-xl font-bold text-gray-800">ManaCLG LevelUp</h1>
-                <p className="text-xs text-gray-600">Careers & Recruitment </p>
+              <div className="block">
+                <h1 className="text-sm lg:text-xl font-bold text-gray-800 truncate">ManaCLG LevelUp</h1>
+                <p className="text-xs text-gray-600 truncate">Careers & Recruitment</p>
               </div>
             </div>
 

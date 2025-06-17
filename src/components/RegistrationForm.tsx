@@ -193,7 +193,7 @@ const RegistrationForm = () => {
   ];
 
   return (
-    <section id="form" className="py-16 lg:py-24 bg-gradient-to-br from-blue-50 via-white to-orange-50">
+    <section id="registration-form" className="py-16 lg:py-24 bg-gradient-to-br from-blue-50 via-white to-orange-50">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="max-w-4xl mx-auto">
           {/* Header Section */}

@@ -1065,20 +1065,20 @@ const AdminDashboard = () => {
             {/* Add New Reference */}
             <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Add New Reference</h3>
-              <div className="flex space-x-3">
+              <div className="grid grid-cols-1 sm:grid-cols-[1fr,auto] gap-3">
                 <input
                   type="text"
                   value={newReferenceName}
                   onChange={(e) => setNewReferenceName(e.target.value)}
                   placeholder="Enter reference name"
-                  className="flex-1 px-4 py-3 border border-gray-300 rounded-xl text-gray-900 placeholder-gray-500 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl text-gray-900 placeholder-gray-500 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none"
                 />
                 <button
                   onClick={addReference}
                   disabled={!newReferenceName.trim()}
-                  className="px-6 py-3 bg-orange-600 text-white rounded-xl hover:bg-orange-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 font-medium"
+                  className="w-full sm:w-auto px-6 py-3 bg-orange-600 text-white rounded-xl hover:bg-orange-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 font-medium flex items-center justify-center"
                 >
-                  <Plus className="w-4 h-4 mr-2 inline" />
+                  <Plus className="w-4 h-4 mr-2" />
                   Add
                 </button>
               </div>

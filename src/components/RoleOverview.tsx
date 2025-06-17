@@ -82,7 +82,7 @@ const RoleOverview = () => {
                 Join hundreds of students who have kickstarted their professional journey with ManaCLG LevelUp
               </p>
               <a
-                href="#form"
+                href="#registration-form"
                 className="premium-cta-button text-lg"
               >
                 APPLY NOW
