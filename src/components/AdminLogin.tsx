@@ -108,13 +108,13 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
             </div>
 
             {/* Default credentials hint */}
-            <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+            {/* <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
               <p className="text-blue-700 text-sm">
                 <strong>Default Credentials:</strong><br />
                 Email: srm@gmail.com<br />
                 Password: srm@12345
               </p>
-            </div>
+            </div> */}
 
             {/* Submit Button */}
             <button
