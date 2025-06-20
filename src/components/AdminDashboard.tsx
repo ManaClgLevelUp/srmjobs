@@ -525,7 +525,7 @@ const AdminDashboard = () => {
         </div>
       </header>
 
-      <div className="px-5 sm:px-6 lg:px-8 py-6 sm:py-8 max-w-7xl mx-auto">
+      <div className="px-4 sm:px-6 lg:px-8 py-6 sm:py-8 w-full">
         {/* Tab Navigation */}
         <div className="flex space-x-1 p-1 bg-gray-100 rounded-xl mb-8 max-w-md">
           <button
@@ -554,49 +554,49 @@ const AdminDashboard = () => {
 
         {activeTab === 'applicants' && (
           <>
-            {/* KPI Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
-              <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300">
-                <div className="flex items-center justify-between">
+            {/* KPI Cards - Optimized for Mobile */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 mb-6 sm:mb-8">
+              <div className="bg-white rounded-xl p-3 sm:p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300">
+                <div className="flex items-start sm:items-center justify-between">
                   <div>
-                    <p className="text-gray-600 text-sm font-medium mb-1">Total Applicants This Month</p>
-                    <p className="text-2xl sm:text-3xl font-bold text-gray-900">{monthlyApplicants}</p>
+                    <p className="text-gray-600 text-xs sm:text-sm font-medium mb-0.5 sm:mb-1">Applicants This Month</p>
+                    <p className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">{monthlyApplicants}</p>
                   </div>
-                  <div className="text-3xl">👥</div>
+                  <div className="text-2xl sm:text-3xl ml-1 mt-1">👥</div>
                 </div>
               </div>
 
-              <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300">
-                <div className="flex items-center justify-between">
+              <div className="bg-white rounded-xl p-3 sm:p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300">
+                <div className="flex items-start sm:items-center justify-between">
                   <div>
-                    <p className="text-gray-600 text-sm font-medium mb-1">Qualified Candidates</p>
-                    <p className="text-2xl sm:text-3xl font-bold text-gray-900">{qualifiedCandidates}</p>
+                    <p className="text-gray-600 text-xs sm:text-sm font-medium mb-0.5 sm:mb-1">Qualified Candidates</p>
+                    <p className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">{qualifiedCandidates}</p>
                   </div>
-                  <div className="text-3xl">✅</div>
+                  <div className="text-2xl sm:text-3xl ml-1 mt-1">✅</div>
                 </div>
               </div>
 
-              <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300">
-                <div className="flex items-center justify-between">
+              <div className="bg-white rounded-xl p-3 sm:p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300">
+                <div className="flex items-start sm:items-center justify-between">
                   <div>
-                    <p className="text-gray-600 text-sm font-medium mb-1">Total Registrations</p>
-                    <p className="text-2xl sm:text-3xl font-bold text-gray-900">{totalRegistrations}</p>
+                    <p className="text-gray-600 text-xs sm:text-sm font-medium mb-0.5 sm:mb-1">Total Registrations</p>
+                    <p className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">{totalRegistrations}</p>
                   </div>
-                  <div className="text-3xl">📈</div>
+                  <div className="text-2xl sm:text-3xl ml-1 mt-1">📈</div>
                 </div>
               </div>
 
-              <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300">
-                <div className="flex items-center justify-between">
+              <div className="bg-white rounded-xl p-3 sm:p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300">
+                <div className="flex items-start sm:items-center justify-between">
                   <div>
-                    <p className="text-gray-600 text-sm font-medium mb-1">Target Achieved</p>
-                    <p className="text-2xl sm:text-3xl font-bold text-gray-900">{targetAchieved.toFixed(1)}%</p>
+                    <p className="text-gray-600 text-xs sm:text-sm font-medium mb-0.5 sm:mb-1">Target Achieved</p>
+                    <p className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">{targetAchieved.toFixed(1)}%</p>
                   </div>
-                  <div className="text-3xl">🎯</div>
+                  <div className="text-2xl sm:text-3xl ml-1 mt-1">🎯</div>
                 </div>
-                <div className="mt-4 bg-gray-200 rounded-full h-2">
+                <div className="mt-2 sm:mt-4 bg-gray-200 rounded-full h-1.5 sm:h-2">
                   <div 
-                    className="bg-gradient-to-r from-orange-500 to-orange-600 h-2 rounded-full transition-all duration-500"
+                    className="bg-gradient-to-r from-orange-500 to-orange-600 h-1.5 sm:h-2 rounded-full transition-all duration-500"
                     style={{ width: `${targetAchieved}%` }}
                   ></div>
                 </div>
@@ -671,90 +671,100 @@ const AdminDashboard = () => {
             </div>
 
             {/* Applicants Table/Cards */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-20">
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-20 w-full">
               {/* Desktop Table View */}
               <div className="hidden lg:block overflow-x-auto">
-                <table className="w-full">
+                <table className="w-full table-fixed border-collapse">
+                  <colgroup>
+                    <col className="w-[22%]" /> {/* Applicant - wider */}
+                    <col className="w-[18%]" /> {/* Contact */}
+                    <col className="w-[22%]" /> {/* Details */}
+                    <col className="w-[15%]" /> {/* Reference */}
+                    <col className="w-[8%]" /> {/* Registrations - narrower */}
+                    <col className="w-[8%]" /> {/* Status - narrower */}
+                    <col className="w-[7%]" /> {/* Actions */}
+                  </colgroup>
                   <thead className="bg-gray-50 border-b border-gray-200">
                     <tr>
-                      <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Applicant</th>
-                      <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Contact</th>
-                      <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Details</th>
-                      <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Reference</th>
-                      <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Registrations</th>
-                      <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th>
-                      <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
+                      <th className="px-4 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Applicant</th>
+                      <th className="px-4 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Contact</th>
+                      <th className="px-4 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Details</th>
+                      <th className="px-4 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Reference</th>
+                      <th className="px-4 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Registrations</th>
+                      <th className="px-4 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th>
+                      <th className="px-4 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
                     {filteredApplicants.map((applicant) => (
                       <tr key={applicant.id} className="hover:bg-gray-50 transition-colors duration-200">
-                        <td className="px-6 py-4">
+                        <td className="px-4 py-4 whitespace-normal">
                           <div>
-                            <div className="font-semibold text-gray-900">{applicant.fullName}</div>
+                            <div className="font-semibold text-gray-900 line-clamp-1">{applicant.fullName}</div>
                             <div className="text-sm text-gray-600 flex items-center mt-1">
-                              <MapPin className="w-3 h-3 mr-1" />
-                              {applicant.city}
+                              <MapPin className="w-3 h-3 mr-1 flex-shrink-0" />
+                              <span className="truncate">{applicant.city}</span>
                             </div>
                             <div className="text-xs text-gray-500 mt-1">
                               {applicant.age} years, {applicant.gender}
                             </div>
                           </div>
                         </td>
-                        <td className="px-6 py-4">
+                        <td className="px-4 py-4 whitespace-normal">
                           <div className="space-y-2">
                             <div className="flex items-center text-sm text-gray-900">
-                              <Phone className="w-3 h-3 mr-2" />
-                              {applicant.phone}
+                              <Phone className="w-3 h-3 mr-2 flex-shrink-0" />
+                              <span className="truncate">{applicant.phone}</span>
                             </div>
                             <div className="flex items-center text-sm text-gray-600">
-                              <Mail className="w-3 h-3 mr-2" />
-                              {applicant.email}
+                              <Mail className="w-3 h-3 mr-2 flex-shrink-0" />
+                              <span className="truncate">{applicant.email}</span>
                             </div>
                           </div>
                         </td>
-                        <td className="px-6 py-4">
+                        <td className="px-4 py-4 whitespace-normal">
                           <div className="space-y-1">
-                            <div className="text-sm font-medium text-gray-900">{applicant.education}</div>
+                            <div className="text-sm font-medium text-gray-900 line-clamp-1">{applicant.education}</div>
                             <div className="text-xs text-gray-600 flex items-center">
-                              <Briefcase className="w-3 h-3 mr-1" />
-                              {applicant.currentPosition || 'Not specified'}
+                              <Briefcase className="w-3 h-3 mr-1 flex-shrink-0" />
+                              <span className="truncate">{applicant.currentPosition || 'Not specified'}</span>
                             </div>
-                            <div className="text-xs text-gray-600">{applicant.workingHours}</div>
-                            <div className="text-xs text-gray-500">{applicant.weeklyAvailability}</div>
+                            <div className="text-xs text-gray-600 truncate">{applicant.workingHours}</div>
                           </div>
                         </td>
-                        <td className="px-6 py-4">
+                        <td className="px-4 py-4 whitespace-normal">
                           <div className="flex items-center">
-                            <UserCheck className="w-3 h-3 mr-1 text-orange-500" />
-                            <span className="text-sm font-medium text-gray-900">{applicant.reference}</span>
+                            <UserCheck className="w-3 h-3 mr-1 text-orange-500 flex-shrink-0" />
+                            <span className="text-sm font-medium text-gray-900 truncate">{applicant.reference}</span>
                           </div>
                         </td>
-                        <td className="px-6 py-4">
+                        <td className="px-4 py-4 text-center">
                           {editingApplicant === applicant.id ? (
-                            <div className="flex items-center space-x-2">
+                            <div className="flex items-center justify-center space-x-1">
                               <input
                                 type="number"
                                 value={editingSales}
                                 onChange={(e) => setEditingSales(Number(e.target.value))}
-                                className="w-16 px-2 py-1 border border-gray-300 rounded text-gray-900 text-sm focus:border-orange-500 outline-none"
+                                className="w-12 px-1 py-1 border border-gray-300 rounded text-gray-900 text-sm focus:border-orange-500 outline-none"
                                 min="0"
                               />
-                              <button
-                                onClick={() => updateSalesCount(applicant.id, editingSales)}
-                                className="text-green-600 hover:text-green-800"
-                              >
-                                <CheckCircle className="w-4 h-4" />
-                              </button>
-                              <button
-                                onClick={() => setEditingApplicant(null)}
-                                className="text-red-600 hover:text-red-800"
-                              >
-                                <XCircle className="w-4 h-4" />
-                              </button>
+                              <div className="flex flex-col space-y-1">
+                                <button
+                                  onClick={() => updateSalesCount(applicant.id, editingSales)}
+                                  className="text-green-600 hover:text-green-800"
+                                >
+                                  <CheckCircle className="w-3 h-3" />
+                                </button>
+                                <button
+                                  onClick={() => setEditingApplicant(null)}
+                                  className="text-red-600 hover:text-red-800"
+                                >
+                                  <XCircle className="w-3 h-3" />
+                                </button>
+                              </div>
                             </div>
                           ) : (
-                            <div className="flex items-center space-x-2">
+                            <div className="flex items-center justify-center space-x-1">
                               <span className="font-semibold text-gray-900">{applicant.salesCompleted}</span>
                               <button
                                 onClick={() => {
@@ -768,11 +778,11 @@ const AdminDashboard = () => {
                             </div>
                           )}
                         </td>
-                        <td className="px-6 py-4">
+                        <td className="px-4 py-4">
                           <select
                             value={applicant.status}
                             onChange={(e) => updateApplicantStatus(applicant.id, e.target.value as any)}
-                            className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(applicant.status)} focus:outline-none focus:ring-2 focus:ring-orange-500`}
+                            className={`w-full px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(applicant.status)} focus:outline-none focus:ring-1 focus:ring-orange-500 appearance-none text-center`}
                           >
                             <option value="New">New</option>
                             <option value="Contacted">Contacted</option>
@@ -781,32 +791,34 @@ const AdminDashboard = () => {
                             <option value="Rejected">Rejected</option>
                           </select>
                         </td>
-                        <td className="px-6 py-4">
-                          <div className="flex items-center space-x-2">
+                        <td className="px-4 py-4">
+                          <div className="flex items-center justify-around">
                             <button
                               onClick={() => setViewingApplicant(applicant)}
-                              className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-all duration-300"
+                              className="p-1.5 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded transition-all duration-300"
                               title="View details"
                             >
                               <Eye className="w-4 h-4" />
                             </button>
-                            <button
-                              onClick={() => handleCallClick(applicant.phone)}
-                              className="p-2 text-green-600 hover:text-green-800 hover:bg-green-50 rounded-lg transition-all duration-300"
-                              title="Call applicant"
-                            >
-                              <Phone className="w-4 h-4" />
-                            </button>
-                            <button
-                              onClick={() => handleWhatsAppClick(applicant.phone, applicant.fullName)}
-                              className="p-2 text-green-600 hover:text-green-800 hover:bg-green-50 rounded-lg transition-all duration-300"
-                              title="WhatsApp message"
-                            >
-                              <MessageCircle className="w-4 h-4" />
-                            </button>
+                            <div className="flex flex-col space-y-2">
+                              <button
+                                onClick={() => handleCallClick(applicant.phone)}
+                                className="p-1.5 text-green-600 hover:text-green-800 hover:bg-green-50 rounded transition-all duration-300"
+                                title="Call applicant"
+                              >
+                                <Phone className="w-4 h-4" />
+                              </button>
+                              <button
+                                onClick={() => handleWhatsAppClick(applicant.phone, applicant.fullName)}
+                                className="p-1.5 text-green-600 hover:text-green-800 hover:bg-green-50 rounded transition-all duration-300"
+                                title="WhatsApp message"
+                              >
+                                <MessageCircle className="w-4 h-4" />
+                              </button>
+                            </div>
                             <button
                               onClick={() => setShowDeleteConfirm(applicant.id)}
-                              className="p-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-lg transition-all duration-300"
+                              className="p-1.5 text-red-600 hover:text-red-800 hover:bg-red-50 rounded transition-all duration-300"
                               title="Delete applicant"
                             >
                               <Trash2 className="w-4 h-4" />
@@ -964,7 +976,7 @@ const AdminDashboard = () => {
         {activeTab === 'references' && (
           <div className="space-y-8">
             {/* Reference Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {referenceStats.map((stat) => (
                 <div key={stat.name} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
                   <div className="flex items-center justify-between">
@@ -978,7 +990,7 @@ const AdminDashboard = () => {
                 </div>
               ))}
             </div>
-
+            
             {/* Create Reference Login */}
             <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
               <div className="flex items-center justify-between mb-4">
@@ -1256,9 +1268,27 @@ const AdminDashboard = () => {
                 </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">Registrations</label>
-                <p className="text-gray-900 font-semibold">{viewingApplicant.salesCompleted}</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">Registrations</label>
+                  <p className="text-gray-900 font-semibold">{viewingApplicant.salesCompleted}</p>
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">Submission Date & Time</label>
+                  <p className="text-gray-900">
+                    {viewingApplicant.submittedAt ? 
+                      new Date(viewingApplicant.submittedAt.toDate()).toLocaleString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: true
+                      }) : 
+                      'Not available'
+                    }
+                  </p>
+                </div>
               </div>
               
               <div>
