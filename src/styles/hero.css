@@ -1,0 +1,19 @@
+/* Hero section background styles */
+.hero-section {
+  position: relative;
+  height: 100vh;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+    url('https://res.cloudinary.com/dvmrhs2ek/image/upload/v1750492608/pemsq8jnozxjws8z2ycw.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+/* Mobile-specific background */
+@media (max-width: 768px) {
+  .hero-section {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+      url('https://res.cloudinary.com/dvmrhs2ek/image/upload/v1750492605/ktyzjpsrvjocsiftb9g2.png');
+  }
+}

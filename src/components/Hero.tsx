@@ -8,28 +8,21 @@ const Hero = () => {
       formElement.scrollIntoView({ behavior: 'smooth' });
     }
   };
-
   return (
-    <section 
-      className="relative min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat"
-      style={{
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://res.cloudinary.com/dvmrhs2ek/image/upload/v1750141293/m5apruz8sdf27kc2hv9c.jpg')`
-      }}
-    >
+    <section className="h-screen flex items-center justify-center pt-16">
       <div className="container mx-auto px-6 text-center relative z-10">
-        <div className="max-w-4xl mx-auto text-white">
-          {/* Main heading */}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 animate-fade-in-up leading-tight">
+        <div className="max-w-4xl mx-auto text-white">          {/* Main heading */}
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 animate-fade-in-up leading-tight text-white drop-shadow-lg">
             Join as a Student Relationship Manager
           </h1>
 
           {/* Subheading */}
-          <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-8 animate-fade-in-up-delay text-orange-300">
+          <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-8 animate-fade-in-up-delay text-orange-300 drop-shadow-md">
             Remote Job – Work From Your Home
           </h2>
 
           {/* Salary info */}
-          <p className="text-xl md:text-2xl mb-12 animate-fade-in-up-delay leading-relaxed">
+          <p className="text-xl md:text-2xl mb-12 animate-fade-in-up-delay leading-relaxed text-white drop-shadow-md">
             Earn a Fixed <span className="text-green-400 font-bold">₹10,000/month</span> + 
             <span className="text-orange-300 font-bold"> ₹500 per extra student registration</span>
           </p>

@@ -1,12 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   const scrollToSection = (sectionId: string) => {
     if (sectionId === 'hero') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (sectionId === 'form') {
+      const element = document.getElementById('registration-form');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     } else {
       const element = document.getElementById(sectionId);
       if (element) {
@@ -24,41 +42,47 @@ const Header = () => {
   ];
 
   return (
-    <>
-      <header className="sticky top-0 z-50 bg-white shadow-md border-b border-gray-100 transition-all duration-300">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="flex justify-between items-center h-16 lg:h-20">
-            {/* Logo */}
-            <div className="flex items-center space-x-3">
-              <img 
-                src="https://res.cloudinary.com/dvmrhs2ek/image/upload/v1750141579/qkehxe09cunkcvyh8o1i.jpg"
-                alt="ManaCLG LevelUp"
-                className="h-8 lg:h-10 w-auto object-contain"
-              />
-              <div className="block">
-                <h1 className="text-sm lg:text-xl font-bold text-gray-800 truncate">ManaCLG LevelUp</h1>
-                <p className="text-xs text-gray-600 truncate">Careers & Recruitment</p>
-              </div>
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      scrolled ? 'bg-white shadow-md' : 'bg-transparent'
+    }`}>
+      <div className="px-5 sm:px-6 lg:px-8 py-4">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <div className="flex items-center">
+            <img 
+              src="https://res.cloudinary.com/dvmrhs2ek/image/upload/v1750141579/qkehxe09cunkcvyh8o1i.jpg"
+              alt="ManaCLG LevelUp"
+              className="h-10 w-auto"
+            />
+            <div className={`ml-3 ${scrolled ? 'text-gray-900' : 'text-white'}`}>
+              <h1 className="text-lg font-bold leading-tight">ManaCLG LevelUp</h1>
+              <p className="text-xs">Careers & Recruitment</p>
             </div>
+          </div>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-8">
-              {navLinks.map((link) => (
-                <button
-                  key={link.id}
-                  onClick={() => scrollToSection(link.id)}
-                  className="text-gray-700 font-medium hover:text-blue-600 transition-colors duration-300 relative group"
-                >
-                  {link.label}
-                  <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-                </button>
-              ))}
-            </nav>
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-8">
+            {navLinks.map((link) => (
+              <button
+                key={link.id}
+                onClick={() => scrollToSection(link.id)}
+                className={`font-medium hover:text-orange-500 transition-colors duration-300 relative group ${
+                  scrolled ? 'text-gray-700' : 'text-white'
+                }`}
+              >
+                {link.label}
+                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
+              </button>
+            ))}
+          </nav>
 
-            {/* Mobile Menu Button */}
+          {/* Mobile Menu Button */}
+          <div className="md:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors duration-300"
+              className={`p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 ${
+                scrolled ? 'text-gray-700' : 'text-white'
+              }`}
             >
               {isMobileMenuOpen ? (
                 <X className="w-6 h-6" />
@@ -68,9 +92,9 @@ const Header = () => {
             </button>
           </div>
         </div>
-      </header>
+      </div>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Navigation Menu */}
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-40 md:hidden">
           <div 
@@ -94,7 +118,7 @@ const Header = () => {
           </div>
         </div>
       )}
-    </>
+    </header>
   );
 };
 
