@@ -1,9 +1,9 @@
 
 import React, { useState } from 'react';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc, serverTimestamp, getDoc } from 'firebase/firestore';
 import { auth, db } from '../lib/firebase';
-import { Lock, Mail, Eye, EyeOff, Shield } from 'lucide-react';
+import { Lock, Mail, Eye, EyeOff, Shield, UserPlus } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 
 interface AdminLoginProps {
@@ -15,6 +15,69 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLogging, setIsLogging] = useState(false);
+  const [showCreateAdmin, setShowCreateAdmin] = useState(false);
+
+  const createAdminAccount = async () => {
+    if (!email || !password) {
+      toast({
+        title: "Error",
+        description: "Please enter both email and password to create admin account.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (email !== 'manaclgs@gmail.com') {
+      toast({
+        title: "Error",
+        description: "Only manaclgs@gmail.com can be set as admin.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (password.length < 6) {
+      toast({
+        title: "Error",
+        description: "Password must be at least 6 characters long.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsLogging(true);
+    try {
+      // Create the admin user account
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Store admin user in Firestore with admin role
+      await setDoc(doc(db, 'adminUsers', user.uid), {
+        email: user.email,
+        role: 'admin',
+        createdAt: serverTimestamp(),
+        lastLogin: serverTimestamp(),
+        uid: user.uid
+      });
+
+      toast({
+        title: "Admin Account Created",
+        description: "Admin account has been created successfully. You can now login.",
+      });
+
+      setShowCreateAdmin(false);
+      onLogin();
+    } catch (error: any) {
+      console.error('Create admin error:', error);
+      toast({
+        title: "Account Creation Failed",
+        description: error.message || "Failed to create admin account. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLogging(false);
+    }
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,11 +87,23 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Store admin login in Firestore
+      // Check if the user is an authorized admin
+      if (user.email !== 'manaclgs@gmail.com') {
+        toast({
+          title: "Access Denied",
+          description: "You are not authorized to access the admin dashboard.",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      // Store/update admin user in Firestore with admin role
       await setDoc(doc(db, 'adminUsers', user.uid), {
         email: user.email,
+        role: 'admin',
         lastLogin: serverTimestamp(),
-        uid: user.uid
+        uid: user.uid,
+        createdAt: serverTimestamp()
       }, { merge: true });
 
       toast({
@@ -39,11 +114,22 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
       onLogin();
     } catch (error: any) {
       console.error('Login error:', error);
-      toast({
-        title: "Login Failed",
-        description: error.message || "Invalid credentials. Please try again.",
-        variant: "destructive"
-      });
+      
+      // Check if the error is due to user not found
+      if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
+        toast({
+          title: "Account Not Found",
+          description: "Admin account doesn't exist. Would you like to create it?",
+          variant: "destructive"
+        });
+        setShowCreateAdmin(true);
+      } else {
+        toast({
+          title: "Login Failed",
+          description: error.message || "Invalid credentials. Please try again.",
+          variant: "destructive"
+        });
+      }
     } finally {
       setIsLogging(false);
     }
@@ -108,13 +194,34 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
             </div>
 
             {/* Default credentials hint */}
-            {/* <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
-              <p className="text-blue-700 text-sm">
-                <strong>Default Credentials:</strong><br />
-                Email: srm@gmail.com<br />
-                Password: srm@12345
-              </p>
-            </div> */}
+            {showCreateAdmin && (
+              <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 mb-4">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-yellow-800 font-semibold">Create Admin Account</h3>
+                </div>
+                <p className="text-yellow-700 text-sm mb-4">
+                  The admin account doesn't exist. Click the button below to create the admin account with the credentials you entered.
+                </p>
+                <div className="flex gap-3">
+                  <button
+                    type="button"
+                    onClick={createAdminAccount}
+                    disabled={isLogging}
+                    className="flex items-center px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors duration-300 text-sm font-medium disabled:opacity-50"
+                  >
+                    <UserPlus className="w-4 h-4 mr-2" />
+                    Create Admin Account
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowCreateAdmin(false)}
+                    className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors duration-300 text-sm font-medium"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            )}
 
             {/* Submit Button */}
             <button

@@ -1,17 +1,44 @@
 
 import React, { useState, useEffect } from 'react';
 import { onAuthStateChanged, User } from 'firebase/auth';
-import { auth } from '../lib/firebase';
+import { doc, getDoc } from 'firebase/firestore';
+import { auth, db } from '../lib/firebase';
 import AdminLogin from '../components/AdminLogin';
 import AdminDashboard from '../components/AdminDashboard';
 
 const Admin = () => {
   const [user, setUser] = useState<User | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        // Check if user is an authorized admin
+        if (user.email === 'manaclgs@gmail.com') {
+          try {
+            const adminDoc = await getDoc(doc(db, 'adminUsers', user.uid));
+            if (adminDoc.exists() && adminDoc.data().role === 'admin') {
+              setUser(user);
+              setIsAdmin(true);
+            } else {
+              // Create admin record if it doesn't exist for the authorized email
+              setUser(user);
+              setIsAdmin(true);
+            }
+          } catch (error) {
+            console.error('Error checking admin status:', error);
+            setUser(null);
+            setIsAdmin(false);
+          }
+        } else {
+          setUser(null);
+          setIsAdmin(false);
+        }
+      } else {
+        setUser(null);
+        setIsAdmin(false);
+      }
       setLoading(false);
     });
 
@@ -30,7 +57,7 @@ const Admin = () => {
     );
   }
 
-  return user ? <AdminDashboard /> : <AdminLogin onLogin={handleLogin} />;
+  return (user && isAdmin) ? <AdminDashboard /> : <AdminLogin onLogin={handleLogin} />;
 };
 
 export default Admin;

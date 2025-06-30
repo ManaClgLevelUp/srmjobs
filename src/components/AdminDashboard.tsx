@@ -21,7 +21,7 @@ interface Applicant {
   reference: string;
   referenceId?: string;
   referenceName?: string;
-  status: 'New' | 'Contacted' | 'Hired' | 'Rejected' | 'In Review';
+  status: 'New' | 'Contacted' | 'Interview Scheduled' | 'Hired' | 'Rejected' | 'In Review';
   salesCompleted: number;
   notes?: string;
   submittedAt: Timestamp;
@@ -203,7 +203,7 @@ const AdminDashboard = () => {
     }
   };
 
-  const updateApplicantStatus = async (id: string, newStatus: 'New' | 'Contacted' | 'Hired' | 'Rejected' | 'In Review') => {
+  const updateApplicantStatus = async (id: string, newStatus: 'New' | 'Contacted' | 'Interview Scheduled' | 'Hired' | 'Rejected' | 'In Review') => {
     try {
       await updateDoc(doc(db, 'applicants', id), { status: newStatus });
       setApplicants(prev => prev.map(app => 
@@ -401,6 +401,8 @@ const AdminDashboard = () => {
         return 'text-blue-600 bg-blue-50 border-blue-200';
       case 'Contacted':
         return 'text-orange-600 bg-orange-50 border-orange-200';
+      case 'Interview Scheduled':
+        return 'text-yellow-600 bg-yellow-50 border-yellow-200';
       case 'In Review':
         return 'text-purple-600 bg-purple-50 border-purple-200';
       case 'Hired':
@@ -629,6 +631,7 @@ const AdminDashboard = () => {
                       <option value="All">All Status</option>
                       <option value="New">New</option>
                       <option value="Contacted">Contacted</option>
+                      <option value="Interview Scheduled">Interview Scheduled</option>
                       <option value="In Review">In Review</option>
                       <option value="Hired">Hired</option>
                       <option value="Rejected">Rejected</option>
@@ -786,6 +789,7 @@ const AdminDashboard = () => {
                           >
                             <option value="New">New</option>
                             <option value="Contacted">Contacted</option>
+                            <option value="Interview Scheduled">Interview Scheduled</option>
                             <option value="In Review">In Review</option>
                             <option value="Hired">Hired</option>
                             <option value="Rejected">Rejected</option>
@@ -856,6 +860,7 @@ const AdminDashboard = () => {
                           >
                             <option value="New">New</option>
                             <option value="Contacted">Contacted</option>
+                            <option value="Interview Scheduled">Interview Scheduled</option>
                             <option value="In Review">In Review</option>
                             <option value="Hired">Hired</option>
                             <option value="Rejected">Rejected</option>
